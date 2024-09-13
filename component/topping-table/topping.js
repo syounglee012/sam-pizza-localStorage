@@ -1,19 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Pizza from "../pizza-table/pizza";
 import "./topping.css";
 
 export default function Topping() {
-  const [toppings, setToppings] = useState([
-    { name: "Cheese", selected: false },
-    { name: "Mushroom", selected: false },
-    { name: "Sausage", selected: false },
-  ]);
+  const [toppings, setToppings] = useState([]);
   const [editing, setEditing] = useState(null);
   const [newTopping, setNewTopping] = useState("");
   const [newToppingInput, setNewToppingInput] = useState("");
 
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("toppings")) || [];
+    setToppings(data);
+  }, []);
+
+  useEffect(() => {
+    if (toppings.length > 0) {
+      localStorage.setItem("toppings", JSON.stringify(toppings));
+    }
+  }, [toppings]);
+
+  const handleEmptyToppings = () => {
+    localStorage.setItem("toppings", JSON.stringify([]));
+  };
+
   const deleteTopping = (toppingToDelete) => {
-    setToppings(toppings.filter((topping) => topping.name !== toppingToDelete));
+    const updatedToppings = toppings.filter(
+      (topping) => topping.name !== toppingToDelete
+    );
+
+    if (updatedToppings.length === 0) {
+      handleEmptyToppings();
+    }
+    setToppings(updatedToppings);
   };
 
   const editTopping = (toppingToEdit) => {
@@ -22,11 +40,10 @@ export default function Topping() {
   };
 
   const saveTopping = () => {
-    setToppings(
-      toppings.map((topping) =>
-        topping.name === editing ? { ...topping, name: newTopping } : topping
-      )
+    const updatedToppings = toppings.map((topping) =>
+      topping.name === editing ? { ...topping, name: newTopping } : topping
     );
+    setToppings(updatedToppings);
     setEditing(null);
   };
 

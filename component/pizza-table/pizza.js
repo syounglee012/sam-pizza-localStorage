@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./pizza.css";
 
 export default function Pizza({ toppings }) {
@@ -6,6 +6,21 @@ export default function Pizza({ toppings }) {
   const [newPizzaName, setNewPizzaName] = useState("");
   const [editingPizzaIndex, setEditingPizzaIndex] = useState(null);
   const [tempPizzaName, setTempPizzaName] = useState("");
+
+  useEffect(() => {
+    const savedPizzas = JSON.parse(localStorage.getItem("pizzas")) || [];
+    setPizzas(savedPizzas);
+  }, []);
+
+  useEffect(() => {
+    if (pizzas.length > 0) {
+      localStorage.setItem("pizzas", JSON.stringify(pizzas));
+    }
+  }, [pizzas]);
+
+  const handleEmptyPizzas = () => {
+    localStorage.setItem("pizzas", JSON.stringify([]));
+  };
 
   const addPizza = () => {
     if (
@@ -18,15 +33,19 @@ export default function Pizza({ toppings }) {
       return;
     }
 
-    setPizzas([
+    const updatedPizzas = [
       ...pizzas,
       { name: newPizzaName, toppings: [], selectedTopping: "" },
-    ]);
+    ];
+    setPizzas(updatedPizzas);
     setNewPizzaName("");
   };
 
   const deletePizza = (index) => {
     const updatedPizzas = pizzas.filter((_, i) => i !== index);
+    if (updatedPizzas.length === 0) {
+      handleEmptyPizzas();
+    }
     setPizzas(updatedPizzas);
   };
 
