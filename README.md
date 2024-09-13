@@ -24,9 +24,9 @@ Manage Pizzas:
 ## Tech&Tool Used
 Next.js: A React framework used for building the application structure.
 
-React Hooks:
-- useState: Used to manage the state of pizzas and toppings.
-- Props are passed between components to manage data flow.
+localStorage: 
+- Utilized to manage and persist the state of pizzas and toppings across browser sessions. 
+- Data is saved to localStorage and automatically retrieved when the component mounts, ensuring persistence even after page reloads.
 
 CSS: For styling the components, focusing on mobile responsiveness and modern design.
 
