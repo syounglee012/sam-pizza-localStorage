@@ -108,66 +108,89 @@ export default function Pizza({ toppings }) {
   return (
     <div className="pizza-container">
       <div>Create a New Pizza</div>
-      <input
-        type="text"
-        placeholder="Pizza Name"
-        value={newPizzaName}
-        onChange={(e) => setNewPizzaName(e.target.value)}
-      />
-      <button onClick={addPizza}>Create</button>
+      <div className="input-box">
+        <input
+          type="text"
+          placeholder="Pizza Name"
+          value={newPizzaName}
+          onChange={(e) => setNewPizzaName(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              addPizza();
+            }
+          }}
+        />
+        <button onClick={addPizza}>Create</button>
+      </div>
 
       <div className="pizza-list">
-        {pizzas.map((pizza, index) => (
-          <div key={index} className="pizza-item">
-            {editingPizzaIndex === index ? (
-              <div>
-                <input
-                  type="text"
-                  value={tempPizzaName}
-                  onChange={(e) => setTempPizzaName(e.target.value)}
-                />
-                <button onClick={() => savePizzaName(index)}>Save</button>
-                <button onClick={() => setEditingPizzaIndex(null)}>
-                  Cancel
-                </button>
-              </div>
-            ) : (
-              <div>
-                <h3>{pizza.name}</h3>
-                <button onClick={() => editPizza(index)}>Edit</button>
-              </div>
-            )}
-
-            <ul>
-              {pizza.toppings.map((topping, toppingIndex) => (
-                <li key={toppingIndex}>
-                  {topping}
-                  <button onClick={() => removeTopping(index, toppingIndex)}>
-                    Remove
+        {pizzas
+          .sort((a, b) => a.id - b.id)
+          .map((pizza, index) => (
+            <div key={index} className="pizza-item">
+              {editingPizzaIndex === index ? (
+                <div>
+                  <input
+                    className="new-name-input"
+                    type="text"
+                    value={tempPizzaName}
+                    onChange={(e) => setTempPizzaName(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        savePizzaName(index);
+                      }
+                    }}
+                  />
+                  <button
+                    className="save-btn"
+                    onClick={() => savePizzaName(index)}
+                  >
+                    Save
                   </button>
-                </li>
-              ))}
-            </ul>
+                  <button onClick={() => setEditingPizzaIndex(null)}>
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <h3>{pizza.name}</h3>
+                  <button onClick={() => editPizza(index)}>Edit</button>
+                </div>
+              )}
+              <select
+                value={pizza.selectedTopping}
+                onChange={(e) => selectedToppingHandler(index, e.target.value)}
+              >
+                <option value="">Select Topping</option>
+                {toppings.map((topping, toppingIndex) => (
+                  <option key={toppingIndex} value={topping.name}>
+                    {topping.name}
+                  </option>
+                ))}
+              </select>
 
-            <select
-              value={pizza.selectedTopping}
-              onChange={(e) => selectedToppingHandler(index, e.target.value)}
-            >
-              <option value="">Select Topping</option>
-              {toppings.map((topping, toppingIndex) => (
-                <option key={toppingIndex} value={topping.name}>
-                  {topping.name}
-                </option>
-              ))}
-            </select>
+              <button
+                className="add-btn"
+                onClick={() => addToppingToPizza(index)}
+              >
+                Add Topping
+              </button>
+              <ul>
+                {pizza.toppings.map((topping, toppingIndex) => (
+                  <li key={toppingIndex}>
+                    {topping}
+                    <button onClick={() => removeTopping(index, toppingIndex)}>
+                      Remove
+                    </button>
+                  </li>
+                ))}
+              </ul>
 
-            <button onClick={() => addToppingToPizza(index)}>
-              Add Topping
-            </button>
-
-            <button onClick={() => deletePizza(index)}>Delete Pizza</button>
-          </div>
-        ))}
+              <button className="del-btn" onClick={() => deletePizza(index)}>
+                Delete Pizza
+              </button>
+            </div>
+          ))}
       </div>
     </div>
   );

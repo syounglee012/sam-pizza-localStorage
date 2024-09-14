@@ -1,10 +1,10 @@
 .pizza-container {
-  max-width: 800px;
+  width: 100%;
   margin: 5rem auto;
-  padding: 20px;
 }
 
 .pizza-container > div:first-child {
+  width: 100%;
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 25px;
@@ -12,11 +12,27 @@
   text-transform: uppercase;
 }
 
+.input-box {
+  gap: 10px;
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
 .pizza-list {
+  display: flex;
+  gap: 10px;
   margin-top: 25px;
+  flex-wrap: wrap;
 }
 
 .pizza-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 300px;
+  max-width: 500px;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -35,49 +51,32 @@
   margin-bottom: 15px;
   font-size: 22px;
   font-weight: bold;
-  color: #333;
   text-transform: capitalize;
 }
 
 .pizza-item ul {
   margin: 15px 0;
-  padding-left: 25px;
 }
 
 .pizza-item li {
+  width: 100%;
   list-style-type: disc;
   font-size: 16px;
-  margin-bottom: 5px;
+  margin-bottom: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 5px;
 }
 
-.pizza-item input[type="text"],
 .pizza-item select {
-  padding: 10px;
+  padding: 5px;
   width: 100%;
-  margin-bottom: 15px;
+  margin: 10px auto 0 auto;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
   transition: border-color 0.3s ease;
-}
-
-.pizza-item input[type="text"]:focus,
-.pizza-item select:focus {
-  outline: none;
-}
-
-button {
-  padding: 10px 20px;
-  margin-right: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
@@ -85,17 +84,26 @@ button:hover {
 }
 
 .pizza-container input[type="text"] {
-  padding: 12px;
-  width: 100%;
-  margin-bottom: 15px;
+  flex: 1;
+  padding: 6px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 16px;
 }
 
-.pizza-container button.add-pizza {
+.new-name-input {
   width: 100%;
-  padding: 12px;
-  color: white;
-  font-size: 18px;
+  margin-bottom: 10px;
+}
+.add-btn {
+  margin-top: 10px;
+
+  align-self: flex-start;
+}
+.save-btn {
+  margin-right: 10px;
+}
+
+.del-btn {
+  align-self: flex-start;
+  margin-top: auto;
 }
