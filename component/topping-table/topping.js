@@ -23,15 +23,22 @@ export default function Topping() {
     localStorage.setItem("toppings", JSON.stringify([]));
   };
 
+  const handleRemovePizzaTopping = (value) => {
+    const data = JSON.parse(localStorage.getItem("pizzas"));
+    value.trim();
+    const dataToppings = data.map((topping) => topping.toppings);
+    console.log(dataToppings.filter((topping) => topping !== value));
+  };
+
   const deleteTopping = (toppingToDelete) => {
     const updatedToppings = toppings.filter(
       (topping) => topping.name !== toppingToDelete
     );
-
-    if (updatedToppings.length === 0) {
-      handleEmptyToppings();
-    }
-    setToppings(updatedToppings);
+    handleRemovePizzaTopping(toppingToDelete);
+    // if (updatedToppings.length === 0) {
+    //   handleEmptyToppings();
+    // }
+    // setToppings(updatedToppings);
   };
 
   const editTopping = (toppingToEdit) => {
