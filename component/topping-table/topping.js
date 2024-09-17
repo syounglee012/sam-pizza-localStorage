@@ -7,6 +7,7 @@ export default function Topping() {
   const [editing, setEditing] = useState(null);
   const [newTopping, setNewTopping] = useState("");
   const [newToppingInput, setNewToppingInput] = useState("");
+  const regexp = /^\b(\w+\b\s*){1,15}$/;
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("toppings")) || [];
